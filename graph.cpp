@@ -1,4 +1,5 @@
 #include "graph.h"
+#include <iostream>
 
 Graph :: Graph()
 {
@@ -11,6 +12,40 @@ Graph :: Graph()
     }
     vertexCount = 0;
 }
+
+void Graph :: depth(int start)
+{
+    // инициализация массива вершин, которые будут пройдены
+    bool visited[SIZE];
+    for(int i = 0; i < SIZE; i++)
+    {
+        visited[i] = false;
+    }
+    // вызов рекурсии 
+    depthInner(start, visited);
+
+}
+
+void Graph :: depthInner(int current, bool visited[])
+{
+    // внутри рекурсии 
+    // выводим себя
+    std::cout << "V" << current << ", ";
+    // запомнить что проходили
+    visited[current] = true;
+    // зайти в смежную непосещенную
+    for(int i = 0;i < vertexCount;i++)
+    {
+        int vnum = vertexes[i]; // номер вершины
+        // проверка смежности вершин с текущей вершиеной по массиву смежности
+        if(matrix[vnum][current] != 0 && visited[vnum] != true)
+        {
+            depthInner(vnum, visited);
+        }
+    }
+}
+
+
 void Graph :: addVertex(int vnumber)
 {
     vertexes[vertexCount++] = vnumber;
