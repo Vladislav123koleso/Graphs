@@ -21,6 +21,7 @@ int main()
     g.addEdge(1,2,8);
     g.addEdge(0,3,11);
 
+    g.deleteVertex(1);
 
     return 0;
 }
