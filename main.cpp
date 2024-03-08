@@ -22,7 +22,9 @@ int main()
     g.addEdge(0,3,11);
 
 
-    g.depth(0); 
+    g.depth(0);
+    cout << endl;
+    g.width(0); 
     //g.deleteVertex(1);
 
     return 0;

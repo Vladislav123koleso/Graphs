@@ -45,6 +45,59 @@ void Graph :: depthInner(int current, bool visited[])
     }
 }
 
+void Graph :: width(int start)
+{
+    //инициализация очереди и списка посещенных вершин
+    int queue[SIZE];
+    int queueCount = 0; // счетчик кол-ва элементов в очереди
+
+    bool visited[SIZE];
+    for(int i = 0; i < SIZE;i++)
+    {
+        visited[i] = false;
+    }
+
+    queue[queueCount++] = start;
+    // цикл по очереди
+    while(queueCount > 0)
+    {
+        // берем верхний элемент, выводим и удаляем из очереди
+        int currentNum = queue[0];
+        queueCount--;
+        for(int i = 0;i < queueCount;i++)
+        {
+            queue[i] = queue[i+1];
+        }
+        std::cout << "V" << currentNum << ", ";
+        visited[currentNum] = true;
+        // кладем в очередь все смежные непосещенные
+        for(int i = 0;i < vertexCount;i++)
+        {
+            int vnum = vertexes[i];
+
+            int j = 0;
+            // проверка не находится ли вершина уже в очереди
+            for(;j < queueCount;j++)
+            {
+                if(queue[j] == vnum)
+                {
+                    break;
+                }
+            }
+
+            if(j < queueCount)
+            {
+                continue;
+            }
+
+            if(matrix[vnum][currentNum] != 0 && visited[vnum] != true)
+            {
+                queue[queueCount++] = vnum;
+            }
+        }
+    }
+}
+
 
 void Graph :: addVertex(int vnumber)
 {
