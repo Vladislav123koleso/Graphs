@@ -17,24 +17,24 @@ class Tree { // класс дерева
             Node* children[SIZE]; // список дочерних вершин
             int childCount; // количество детей
             
-            void addChild(Node* newChild);
-            void delChild(Node* child);
+            void addChild(Node* newChild); // добавление дочернего узла
+            void delChild(Node* child); // удаление указанного дочернего узла текущего узла
             
-            void dummy(void* param);
+            
         };
         Tree();
         ~Tree();
     
-        void setRoot(int number);
-        void addNode(int parentNumber, int newNodeNumber);
+        void setRoot(int number); // установка корневого узла
+        void addNode(int parentNumber, int newNodeNumber); // добавление нового узла
+        // parentNumer - номер родительского узла для создаваемого узла / newNodeNumber - номер нового создаваемого узла
         
-        void delNode(int nodeNumber);
-        void dummy(int nodeNumber);
+        void delNode(int nodeNumber); // удаление узел со всеми дочерними узлами
         
-        friend void print(Tree& tree); // Объявление функции print как друга класса Tree
+        friend void print(Tree& tree); // вывод дерева
     
     private:
-        Node* getNodeByNumber(int number, Node* current);
+        Node* getNodeByNumber(int number, Node* current); // поиск узла по его номеру
         Node* root;
 };
 #endif
