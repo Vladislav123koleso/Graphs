@@ -137,69 +137,6 @@ BinaryTree::Node* BinaryTree::findNodeByData(int findData)
     }
     return findNode;
 }
-/*
-void BinaryTree::delInt(int delData)
-{
-    Node* current = root;
-    Node* parent = nullptr;
-
-    while (current != nullptr && current->data != delData)
-    {
-        parent = current;
-        if (delData < current->data)
-            current = current->leftChild;
-        else
-            current = current->rightChild;
-    }
-
-    if (current != nullptr)
-    {
-        Node* delNode = nullptr;
-        if (current->leftChild == nullptr || current->rightChild == nullptr)
-        {
-            Node* child = nullptr;
-            delNode = current;
-
-            if (current->leftChild != nullptr)
-                child = current->leftChild;
-            else if (current->rightChild != nullptr)
-                child = current->rightChild;
-
-            if (parent == nullptr)
-                root = child;
-            else
-            {
-                if (parent->leftChild == current)
-                    parent->leftChild = child;
-                else
-                    parent->rightChild = child;
-            }
-        }
-        else 
-        {
-            Node* mostLeftChild = current->rightChild;
-            Node* mostLeftParent = current;
-
-            while (mostLeftChild->leftChild != nullptr)
-            {
-                mostLeftParent = mostLeftChild;
-                mostLeftChild = mostLeftChild->leftChild;
-            }
-
-            current->data = mostLeftChild->data;
-            delNode = mostLeftChild;
-
-            if (mostLeftParent->leftChild == mostLeftChild)
-                mostLeftParent->leftChild = nullptr;
-            else
-            mostLeftParent->rightChild = mostLeftChild->rightChild;
-
-        }
-        delete delNode;
-    }
-}
-
-*/
 
 void BinaryTree::delInt(int delData) {
     
@@ -281,4 +218,69 @@ void BinaryTree::setNewChild(Node* parent, Node* newChild) {
     if (newChild != nullptr) {
         newChild->parent = parent;
     }
+}
+
+void BinaryTree::symmetricWalk(int output_array[])
+{
+    int i = 0;
+    Node* current = nullptr;
+    Node* parent = nullptr;
+
+    if(root->leftChild != nullptr)
+    {
+        current = findleftNode(root); // текущий узел самый левый
+        parent = current->parent;
+        output_array[i] = current->data;
+        i++;
+        while(parent != root)
+        {
+            if(current == parent->leftChild)
+            {
+                parent = current -> parent;
+                output_array[i] = parent->data;
+                i++;
+
+                if(parent->rightChild != nullptr)
+                {
+                    current = parent->rightChild;
+                    if(current->leftChild != nullptr)
+                    {
+                        current = findleftNode(parent->rightChild);
+                        parent = current->parent;
+                    }
+                    output_array[i] = current->data;
+                    i++;
+                }
+                else
+                {
+                    current = parent;
+                    parent = current->parent;
+                }
+            }
+            else
+            {
+                current = parent;
+                parent = current->parent;
+            }
+            
+            
+        }
+    }
+    output_array[i] = root->data;
+    i++;
+
+    
+}
+BinaryTree::Node* BinaryTree::findleftNode(Node* current)
+{
+    while(current->leftChild != nullptr)
+    {
+        current = current->leftChild;
+    }
+    return current;
+}
+
+void BinaryTree::symmetrickWalkLeft(int output_array[], int i)
+{
+
 }
