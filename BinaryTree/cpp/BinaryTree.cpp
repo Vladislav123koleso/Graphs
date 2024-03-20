@@ -52,15 +52,24 @@ bool BinaryTree::isRoot(Node* check)
 
 void BinaryTree::delLeaf(Node* leaf)
 {
-    if (leaf->parent->leftChild == leaf) 
-    {
-        leaf->parent->leftChild = nullptr;
-    } 
-    else 
-    {
-        leaf->parent->rightChild = nullptr;
+
+    if (leaf == nullptr) {
+        return; // Защита от нулевого указателя
     }
-    delete leaf;
+
+    if (isRoot(leaf)) {
+        // Если удаляемый узел является корнем
+        root = nullptr;
+    } else {
+        // Иначе обновляем указатель родительского узла
+        Node* parent = leaf->parent;
+        if (parent->leftChild == leaf) {
+            parent->leftChild = nullptr;
+        } else {
+            parent->rightChild = nullptr;
+        }
+    }
+    delete leaf; // Удаляем сам узел
 }
 
 void BinaryTree::delNodeWithOneChild(Node* delNode)
@@ -202,12 +211,12 @@ void BinaryTree::delInt(int delData) {
         delete root;
     }
     // если удаляемый узел это лист
-    if(isLeaf(delNode))
+    else if(isLeaf(delNode))
     {
         delLeaf(delNode);
     }
     // если удаляемый узел имеет 1 дочерний узел
-    if((delNode->rightChild == nullptr && delNode->leftChild != nullptr) || 
+    else if((delNode->rightChild == nullptr && delNode->leftChild != nullptr) || 
     (delNode->leftChild == nullptr && delNode->rightChild != nullptr))
     {
         delNodeWithOneChild(delNode);
@@ -239,7 +248,7 @@ void BinaryTree::delInt(int delData) {
                 maxLeftNode->rightChild = delNode->rightChild;
             }
             // если новый узел не дочерний удаляемого
-            else
+            else if(maxLeftNode != delNode->leftChild)
             {
                 // обновляем указатели на дочерний узел нового узла
                 maxLeftNode->parent->rightChild = maxLeftNode->leftChild;

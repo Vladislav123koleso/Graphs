@@ -15,6 +15,6 @@ int main()
     tree.addInt(5);
 
     //cout << tree.findNodeByData(2) << endl;
-    tree.delInt(2);
+    tree.delInt(1);
     return 0;
 }
