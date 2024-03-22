@@ -1,6 +1,6 @@
 #include <iostream>
 #include "BinaryTree/cpp/BinaryTree.cpp"
-#include "graph/cpp/graph.cpp"
+
 
 using namespace std;
 
@@ -17,10 +17,20 @@ int main()
     tree.addInt(4);
     tree.addInt(3);
     tree.addInt(5);
+    tree.addInt(13);
+    tree.addInt(10);
+    tree.addInt(9);
+    tree.addInt(11);
+    tree.addInt(12);
+    tree.addInt(14);
+    tree.addInt(15);
+    tree.addInt(16);
+    tree.addInt(17);
+    tree.addInt(18);
 
     //cout << tree.findNodeByData(2) << endl;
     //tree.delInt(5);
-    const int size = 9;
+    const int size = 19;
     int output_array[size];
     for(int i = 0;i<size;i++)
     {
@@ -32,5 +42,7 @@ int main()
     {
         cout << output_array[i] << endl;
     }
+
+    tree.print();
     return 0;
 }

@@ -1,5 +1,9 @@
+#pragma once
+#include <iostream>
 #include "../header/BinaryTree.h"
+#include "../../stack/cpp/stack.cpp"
 
+#define SIZE 20
 void BinaryTree::addInt(int newData)
 {
     if(root == nullptr)
@@ -222,65 +226,81 @@ void BinaryTree::setNewChild(Node* parent, Node* newChild) {
 
 void BinaryTree::symmetricWalk(int output_array[])
 {
-    int i = 0;
-    Node* current = nullptr;
-    Node* parent = nullptr;
+    // int index = 0; // индекс текущего элемента в массиве
+    // Node* current = root; // начинаем с корневого узла
+    // std::stack<Node*> stack; // создаем стек для хранения узлов
+    // while (current != nullptr || !stack.empty()) { // пока не обошли все узлы
+    //     while (current != nullptr) { // идем влево, пока можем
+    //         stack.push(current); // добавляем узел в стек
+    //         current = current->leftChild;
+    //     }
+    //     current = stack.top(); // берем узел из стека
+    //     stack.pop();
+    //     output_array[index++] = current->data; // записываем значение узла в массив
+    //     current = current->rightChild; // идем вправо
+    //}
 
-    if(root->leftChild != nullptr)
+    int index = 0; // индекс текущего элемента в массиве
+    Stack stack;
+    Node* current = root;
+    while(!stack.isEmpty() || current!=nullptr)
     {
-        current = findleftNode(root); // текущий узел самый левый
-        parent = current->parent;
-        output_array[i] = current->data;
-        i++;
-        while(parent != root)
+         // Двигаемся влево, добавляя узлы в стек
+        while (current != nullptr) 
         {
-            if(current == parent->leftChild)
-            {
-                parent = current -> parent;
-                output_array[i] = parent->data;
-                i++;
-
-                if(parent->rightChild != nullptr)
-                {
-                    current = parent->rightChild;
-                    if(current->leftChild != nullptr)
-                    {
-                        current = findleftNode(parent->rightChild);
-                        parent = current->parent;
-                    }
-                    output_array[i] = current->data;
-                    i++;
-                }
-                else
-                {
-                    current = parent;
-                    parent = current->parent;
-                }
-            }
-            else
-            {
-                current = parent;
-                parent = current->parent;
-            }
-            
-            
+            stack.push(current);
+            current = current->leftChild;
         }
-    }
-    output_array[i] = root->data;
-    i++;
 
+        // Извлекаем узел из стека и добавляем его значение в выходной массив
+        current = stack.pop();
+        //stack.pop();
+        output_array[index++] = current->data;
+
+        // Переходим к правому поддереву
+        current = current->rightChild;
+    }
     
 }
-BinaryTree::Node* BinaryTree::findleftNode(Node* current)
+
+
+void BinaryTree::print()
 {
-    while(current->leftChild != nullptr)
+    Node* queue[100];
+    int queueCounter = 0;
+    queue[queueCounter++] = root;
+    while(queueCounter != 0)
     {
-        current = current->leftChild;
+        Node* current = queue[0];
+        //удалить
+        queueCounter--;
+        for(int i = 0;i<queueCounter;i++)
+        {
+            queue[i] = queue[i+1];
+        }
+
+        if(current->parent)
+        {
+            std::cout << current->parent->data;
+        }
+        std::cout << " " << current->data << std::endl;
+        if(current->leftChild)
+        {
+            queue[queueCounter++] = current->leftChild;
+        }
+        if(current->rightChild)
+        {
+            queue[queueCounter++] = current->rightChild;
+        }
     }
-    return current;
 }
 
-void BinaryTree::symmetrickWalkLeft(int output_array[], int i)
-{
 
-}
+// BinaryTree::Node* BinaryTree::findleftNode(Node* current)
+// {
+//     while(current->leftChild != nullptr)
+//     {
+//         current = current->leftChild;
+//     }
+//     return current;
+// }
