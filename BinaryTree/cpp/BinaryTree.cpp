@@ -226,20 +226,6 @@ void BinaryTree::setNewChild(Node* parent, Node* newChild) {
 
 void BinaryTree::symmetricWalk(int output_array[])
 {
-    // int index = 0; // индекс текущего элемента в массиве
-    // Node* current = root; // начинаем с корневого узла
-    // std::stack<Node*> stack; // создаем стек для хранения узлов
-    // while (current != nullptr || !stack.empty()) { // пока не обошли все узлы
-    //     while (current != nullptr) { // идем влево, пока можем
-    //         stack.push(current); // добавляем узел в стек
-    //         current = current->leftChild;
-    //     }
-    //     current = stack.top(); // берем узел из стека
-    //     stack.pop();
-    //     output_array[index++] = current->data; // записываем значение узла в массив
-    //     current = current->rightChild; // идем вправо
-    //}
-
     int index = 0; // индекс текущего элемента в массиве
     Stack stack;
     Node* current = root;
@@ -254,7 +240,6 @@ void BinaryTree::symmetricWalk(int output_array[])
 
         // Извлекаем узел из стека и добавляем его значение в выходной массив
         current = stack.pop();
-        //stack.pop();
         output_array[index++] = current->data;
 
         // Переходим к правому поддереву
@@ -296,11 +281,3 @@ void BinaryTree::print()
 }
 
 
-// BinaryTree::Node* BinaryTree::findleftNode(Node* current)
-// {
-//     while(current->leftChild != nullptr)
-//     {
-//         current = current->leftChild;
-//     }
-//     return current;
-// }

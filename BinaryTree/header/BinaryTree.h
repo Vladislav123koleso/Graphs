@@ -1,6 +1,5 @@
 
 
-
 class BinaryTree
 {
 public:
@@ -48,7 +47,6 @@ public:
     void addInt(int newData);
     void delInt(int delData);
     void symmetricWalk(int output_array[]); // алгоритм симметричного обхода, выводящий элементы в отсортированном порядке. 
-    Node* findleftNode(Node* current); // поиск самого левого дочернего узла родителя
 private:
     void setNewChild(Node* child, Node* newChild = nullptr);
     void delNodeWithOneChild(Node* delNode); // удаление узла с 1 дочерним узлом
