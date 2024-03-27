@@ -29,7 +29,7 @@ int main()
     tree.addInt(18);
 
     //cout << tree.findNodeByData(2) << endl;
-    //tree.delInt(5);
+    tree.delInt(17);
     const int size = 19;
     int output_array[size];
     for(int i = 0;i<size;i++)

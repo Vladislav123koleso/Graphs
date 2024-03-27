@@ -32,14 +32,14 @@ void Graph::findMinDistancesFloyd()
         {
             if(i == k)
                 continue;
-            int ci = vertexes[i]; 
+            int ci = vertexes[i];
             for(int j = 0; j<vertexCount;j++)
             {
                 if(j == k)
                     continue;
                 int cj = vertexes[j];
                 if(weights[ci][ck] + weights[ck][cj] < weights[ci][cj]) {
-                    // пересчет мматрицы путей
+                    // пересчет матрицы путей
                     weights[ci][cj] = weights[ci][ck] + weights[ck][cj];
                 }
             }

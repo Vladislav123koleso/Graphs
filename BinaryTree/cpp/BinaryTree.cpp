@@ -254,7 +254,9 @@ void BinaryTree::print()
     Node* queue[100];
     int queueCounter = 0;
     queue[queueCounter++] = root;
-    while(queueCounter != 0)
+    if(root != nullptr)
+    {
+        while(queueCounter != 0)
     {
         Node* current = queue[0];
         //удалить
@@ -278,6 +280,8 @@ void BinaryTree::print()
             queue[queueCounter++] = current->rightChild;
         }
     }
+    }
+    
 }
 
 
