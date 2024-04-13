@@ -79,17 +79,18 @@ void BinaryTree::delLeaf(Node* leaf)
 void BinaryTree::delNodeWithOneChild(Node* delNode)
 {
     Node* child = nullptr;
-    if(delNode->leftChild == nullptr)
+    if (delNode->leftChild == nullptr)
     {
         child = delNode->rightChild;
     }
-    if(delNode->rightChild == nullptr)
+    else
     {
         child = delNode->leftChild;
     }
-    if(delNode-> parent != nullptr)
+    
+    if (delNode->parent != nullptr)
     {
-        if(delNode->parent->leftChild == delNode)
+        if (delNode->parent->leftChild == delNode)
         {
             delNode->parent->leftChild = child;
         }
@@ -99,11 +100,12 @@ void BinaryTree::delNodeWithOneChild(Node* delNode)
         }
     }
     
-    if(child != nullptr)
+    if (child != nullptr)
     {
         child->parent = delNode->parent;
     }
-    delNode = nullptr;
+    
+    // Освобождаем память, занятую удаляемым узлом
     delete delNode;
 }
 
@@ -144,63 +146,57 @@ BinaryTree::Node* BinaryTree::findNodeByData(int findData)
 
 void BinaryTree::delInt(int delData) {
     
-    Node* delNode = findNodeByData(delData);
+   Node* delNode = findNodeByData(delData);
+
     // если удаляемый узел это корень
-    if(isRoot(delNode))
-    {
+    if (isRoot(delNode)) {
         root = nullptr;
-        delete root;
     }
     // если удаляемый узел это лист
-    else if(isLeaf(delNode))
-    {
+    else if (isLeaf(delNode)) {
         delLeaf(delNode);
     }
     // если удаляемый узел имеет 1 дочерний узел
-    else if((delNode->rightChild == nullptr && delNode->leftChild != nullptr) || 
-    (delNode->leftChild == nullptr && delNode->rightChild != nullptr))
-    {
+    else if ((delNode->rightChild == nullptr && delNode->leftChild != nullptr) || 
+             (delNode->leftChild == nullptr && delNode->rightChild != nullptr)) {
         delNodeWithOneChild(delNode);
     }
     // если удаляемый узел имеет 2 дочерних узла
-    else
-    {
+    else {
         Node* parent = delNode->parent;
         Node* maxLeftNode = delNode->leftChild; // максимальный дочерний узел удаляемого узла(его поставим вместо удаляемого)
-        while(maxLeftNode->rightChild != nullptr)
-        {
+
+        // Находим максимальный узел в левом поддереве,
+        // который не является прямым левым дочерним элементом удаляемого узла
+        while (maxLeftNode->rightChild != nullptr && maxLeftNode->rightChild != delNode) {
             parent = maxLeftNode;
             maxLeftNode = maxLeftNode->rightChild;
         }
-        if(delNode->parent != nullptr)
-        {
-            // 
-            if(delNode->parent->leftChild == delNode)
-            {
+
+        if (delNode->parent != nullptr) {
+            if (delNode->parent->leftChild == delNode) {
                 delNode->parent->leftChild = maxLeftNode;
-            }
-            else
-            {
+            } else {
                 delNode->parent->rightChild = maxLeftNode;
             }
-            // если новый узел дочерний удаляемого
-            if(maxLeftNode == delNode->leftChild)
-            {
-                maxLeftNode->rightChild = delNode->rightChild;
-            }
-            // если новый узел не дочерний удаляемого
-            else if(maxLeftNode != delNode->leftChild)
-            {
-                // обновляем указатели на дочерний узел нового узла
+
+            // Подставляем старые дочерние узлы удаляемого узла к новому узлу замены
+            maxLeftNode->rightChild = delNode->rightChild;
+
+            // Если максимальный узел в левом поддереве не является прямым левым дочерним элементом удаляемого узла,
+            // обновляем указатели на дочерние узлы нового узла замены
+            if (maxLeftNode->rightChild != delNode) {
                 maxLeftNode->parent->rightChild = maxLeftNode->leftChild;
-                maxLeftNode->leftChild->parent =  maxLeftNode->parent;
-                // подставляем старые дочерние узлы удаляемого узла новому
-                maxLeftNode->rightChild = delNode->rightChild;
+                if (maxLeftNode->leftChild != nullptr) {
+                    maxLeftNode->leftChild->parent = maxLeftNode->parent;
+                }
                 maxLeftNode->leftChild = delNode->leftChild;
             }
+
             maxLeftNode->parent = delNode->parent;
         }
-        delNode = nullptr;
+
+        // Освобождаем память, занятую удаляемым узлом
         delete delNode;
     }
 }
